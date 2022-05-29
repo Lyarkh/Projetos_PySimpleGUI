@@ -3,7 +3,7 @@ import PySimpleGUI as sg
 layout = [
     [sg.Text('Text', enable_events = True, key='-TEXT-' ), sg.Spin(['Item 1', 'Item 2', 'Item 3'])],
     [sg.Button('Button', key='-BUTTON1-')],
-    [sg.Input()],
+    [sg.Input(key='-INPUT-')],
     [sg.Text('Teste'), sg.Button('Button', key='-BUTTON2-')]
     
 ]
@@ -17,7 +17,7 @@ while True:
         break
 
     if event == '-BUTTON1-':
-        print('button pressed')
+        print(values['-INPUT-'])
 
     if event == '-BUTTON2-':
         print('something else')
