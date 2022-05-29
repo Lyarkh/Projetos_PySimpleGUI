@@ -1,10 +1,12 @@
 import PySimpleGUI as sg 
 
 layout = [
-    [sg.Text('Text', enable_events = True, key='-TEXT-' ), sg.Spin(['Item 1', 'Item 2', 'Item 3'])],
-    [sg.Button('Button', key='-BUTTON1-')],
-    [sg.Input(key='-INPUT-')],
-    [sg.Text('Teste'), sg.Button('Button', key='-BUTTON2-')]
+    [sg.Input(key='-INPUT-'), sg.Spin(
+        ['km to mile', 
+        'kg to pound', 
+        'sec to min'], key='-UNITS-'), 
+    sg.Button('Converter', key='-CONVERT-')],
+    [sg.Text('Output', key='-OUTPUT-')]
     
 ]
 
@@ -16,14 +18,24 @@ while True:
     if event == sg.WIN_CLOSED:
         break
 
-    if event == '-BUTTON1-':
-        print(values['-INPUT-'])
+    if event == '-CONVERT-':    
+        input_value = values['-INPUT-']
+        if input_value.isnumeric():
+            match values['-UNITS-']:
+                case 'km to mile':
+                    output = round(float(input_value) * 0.06214, 2)
+                    output_string = f'{input_value} km are {output} miles.'
+                case 'kg to pound':
+                    output = round(float(input_value) * 2.20462, 2)
+                    output_string = f'{input_value} kg are {output} pounds.'
+                case 'sec to min':
+                    output = round(float(input_value) / 60, 2)
+                    output_string = f'{input_value} seconds are {output} minutes.'
+            
+            window['-OUTPUT-'].update(output_string)
+        else:
+            window['-OUTPUT-'].update('Please enter a number')
 
-    if event == '-BUTTON2-':
-        print('something else')
-    
-    if event == '-TEXT-':
-        print('click on the text')
 
 window.close()
 
